@@ -1,12 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useMovie } from '../hooks/useMovie'
+import { useKey } from '../hooks/useKey'
+import StarRating from './StarRating'
 
 function MovieDetails({selectedId,onCloseMovie,onAddWatched,watched}) {
     const [userRating, setUserRating] = useState ("")
     const{isLoading, movie, error} = useMovie (selectedId)
-    const isWatched = watched.map (movie=>
+   
+    const countRef = useRef (0)
+
+useEffect (function(){
+  if(userRating)countRef.current++  
+},[userRating])
+
+     const isWatched = watched.some (movie=>
         movie.imdbID.includes(selectedId)
     )
+
+    useKey("Escape",onCloseMovie)
 
     const watchedUserRating = watched.find (movie=>
         movie.imdbID===selectedId
@@ -64,7 +75,12 @@ function MovieDetails({selectedId,onCloseMovie,onAddWatched,watched}) {
 
         <section>
             <div className="rating">
-                <button onClick={handleAdd} className='btn-add'>+ Add to list</button>
+                {isWatched ? <p>You rated this movie {watchedUserRating} <span>⭐</span></p>:
+                <>
+                <StarRating maxsRating={10} size={24} onSetRating={setUserRating}/>
+                {userRating>0&&<button onClick={handleAdd} className='btn-add'>+ Add to list</button>}
+                </>
+                }
             </div>
             <p><em>{plot}</em></p>
             <p>Starring {actors}</p>

@@ -12,9 +12,11 @@ import Loader from "./components/Loader";
 import ErrorMessage from "./components/ErrorMessage";
 import MovieDetails from "./components/MovieDetails";
 import { useMovies } from "./hooks/useMovies";
+import { useLocalStorageState } from "./hooks/useLocalStorageState";
 
 export default function App() {
-  const [watched, setWatched] = useState([]);
+  // const [watched, setWatched] = useState([]);
+  const[watched,setWatched] = useLocalStorageState ([],"watched")
   const [query, setQuery] = useState ("");
   const [selectedId, setselectedId] = useState (null);
   const {movies,isLoading,error} = useMovies (query)
