@@ -20,9 +20,9 @@ A modern React application that allows users to search for movies, view detailed
 
 ## 🛠️ Tech Stack
 
-- React (Vite / CRA depending on setup)
+- React (Vite)
 - JavaScript (ES6+)
-- CSS3
+- CSS5
 - REST API (movie data source)
 - React Hooks (useState, useEffect, custom hooks if used)
 
